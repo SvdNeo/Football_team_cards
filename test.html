@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Football Team Cards</title>
+  <style>
+    .team-card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin: 10px;
+      width: 200px;
+      text-align: center;
+    }
+
+    .captain {
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <label for="positionFilter">Filter by Position:</label>
+  <select id="positionFilter" onchange="filterPlayers()">
+    <option value="all">All Positions</option>
+    <option value="forward">Forward</option>
+    <option value="midfielder">Midfielder</option>
+    <option value="defender">Defender</option>
+    <option value="goalkeeper">Goalkeeper</option>
+  </select>
+
+  <div id="teamCards"></div>
+
+  <script>
+    
+    
+function buildTeamCards(players) {
+      const teamCardsContainer = document.getElementById('teamCards');
+      teamCardsContainer.innerHTML = '';
+
+      players.forEach(player => {
+        const card = document.createElement('div');
+        card.classList.add('team-card');
+
+        card.innerHTML = `
+          <p>Name: ${player.name}</p>
+          <p>Position: ${player.position}</p>
+          <p>Number: ${player.number}</p>
+          ${player.isCaptain ? `<p class="captain">Captain</p>` : ''}
+          ${player.nickname ? `<p>Nickname: ${player.nickname}</p>` : ''}
+        `;
+
+        teamCardsContainer.appendChild(card);
+      });
+    }
+
+    function filterPlayers() {
+      const positionFilter = document.getElementById('positionFilter').value;
+
+      const filteredPlayers = positionFilter === 'all'
+        ? team.players
+        : team.players.filter(player => player.position === positionFilter);
+
+      buildTeamCards(filteredPlayers);
+    }
+
+    // Initial build
+    buildTeamCards(team.players);
+  </script>
+</body>
+</html>
